@@ -46,7 +46,7 @@ jobs:
       # 7. EventBridge 규칙(rule) 설정
       - name: Set up EventBridge Rule
         run: |
-          aws events put-rule --schedule-expression "rate(1 day)" --name "daily-ghost-commit" --state ENABLED
+          aws events put-rule --schedule-expression "rate(1 minute)" --name "daily-ghost-commit" --state ENABLED
 
       # 8. EventBridge 규칙에 Lambda 함수를 실행 타겟으로 추가
       - name: EventBridge 규칙에 Lambda 함수를 실행 타겟으로 추가
