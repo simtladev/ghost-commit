@@ -36,9 +36,17 @@ jobs:
       # 5. Lambda 함수 코드 압축
       - name: Lambda 함수 코드 압축
         run: |
-          zip -r ghostCommitFunction.zip .  # 현재 디렉터리 내의 모든 파일을 압축합니다.
+          zip -r function.zip .  # 현재 디렉터리 내의 모든 파일을 압축합니다.
 
       # 6. Lambda 함수 코드 업데이트
       - name: Lambda 함수 코드 업데이트
         run: |
-          aws lambda update-function-code --function-name ghostCommitFunction --zip-file fileb://ghostCommitFunction.zip
+          aws lambda update-function-code --function-name ghost-commit-lambda --zip-file fileb://function.zip
+
+      - name: Set up EventBridge Rule
+        run: |
+          aws events put-rule --schedule-expression "rate(1 day)" --name "daily-ghost-commit" --state ENABLED
+
+      - name: Add Lambda target to EventBridge Rule
+        run: |
+          aws events put-targets --rule "daily-ghost-commit" --targets "Id"="1","Arn"="arn:aws:lambda:us-east-1:your-account-id:function:ghost-commit-lambda"
