@@ -21,14 +21,24 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      # 3. Lambda 함수 코드 압축
+
+      # 3. env 설정
+      - name: env 설정
+        env:
+          ENV_FILE: ${{ vars.ENV_FILE }}
+        run: |
+          echo "$ENV_FILE" > .env
+
+      # 4. npm 다운로드
+      - name: npm 다운로드
+        run: npm i
+
+      # 5. Lambda 함수 코드 압축
       - name: Lambda 함수 코드 압축
         run: |
           zip -r function.zip .  # 현재 디렉터리 내의 모든 파일을 압축합니다.
 
-      # 4. Lambda 함수 코드 업데이트
+      # 6. Lambda 함수 코드 업데이트
       - name: Lambda 함수 코드 업데이트
         run: |
-          aws lambda update-function-code \
-            --function-name ghostCommitFunction \  # Lambda 함수 이름
-            --zip-file fileb://function.zip  # Lambda 코드 압축 파일 경로
+          aws lambda update-function-code --function-name ghostCommitFunction --zip-file fileb://function.zip
