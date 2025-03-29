@@ -1,0 +1,16 @@
+{
+  "name": "ghost-commit",
+  "version": "1.0.0",
+  "description": "눈에 보이지 않는 자동 커밋",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/rest": "^21.1.1",
+    "dotenv": "^16.4.7"
+  }
+}
