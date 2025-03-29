@@ -41,4 +41,4 @@ jobs:
       # 6. Lambda 함수 코드 업데이트
       - name: Lambda 함수 코드 업데이트
         run: |
-          aws lambda update-function-code --function-name ghostCommitFunction --zip-file fileb://function.zip
+          aws lambda update-function-code --function-name ghostCommitFunction --zip-file fileb://ghostCommitFunction.zip
