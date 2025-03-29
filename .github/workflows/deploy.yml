@@ -1,0 +1,23 @@
+name: Lambda & EventBridge 배포
+
+on:
+  push:
+    branches:
+      - main # main 브랜치에 푸시될 때마다 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # Ubuntu 환경에서 실행
+
+    steps:
+      # 1. 코드 체크아웃
+      - name: 코드 체크아웃
+        uses: actions/checkout@v2
+
+      # 2. AWS CLI 설정
+      - name: AWS CLI 설정
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
