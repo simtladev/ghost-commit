@@ -43,6 +43,10 @@ jobs:
         run: |
           aws lambda update-function-code --function-name ghost-commit-lambda --zip-file fileb://function.zip
 
+      - name: Lambda 함수 타임아웃을 5분으로 설정
+        run: |
+          aws lambda update-function-configuration --function-name ghost-commit-lambda --timeout 300
+
       # 7. EventBridge 규칙(rule) 설정
       - name: Set up EventBridge Rule
         run: |
