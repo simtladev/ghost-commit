@@ -42,13 +42,3 @@ jobs:
       - name: Lambda 함수 코드 업데이트
         run: |
           aws lambda update-function-code --function-name ghost-commit-lambda --zip-file fileb://function.zip
-
-      # 7. EventBridge 규칙(rule) 설정
-      - name: Set up EventBridge Rule
-        run: |
-          aws events put-rule --schedule-expression "rate(1 minute)" --name "daily-ghost-commit" --state ENABLED
-
-      # 8. EventBridge 규칙에 Lambda 함수를 실행 타겟으로 추가
-      - name: EventBridge 규칙에 Lambda 함수를 실행 타겟으로 추가
-        run: |
-          aws events put-targets --rule "daily-ghost-commit" --targets "Id"="1","Arn"="arn:aws:lambda:us-east-1:${{ secrets.AWS_ACCOUNT_ID }}:function:ghost-commit-lambda"
